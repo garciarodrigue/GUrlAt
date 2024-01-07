@@ -3,6 +3,9 @@ import requests
 import random
 import string
 from colorama import Fore, Back, Style, init
+from urllib.parse import urlparse
+
+
 init()
 
 cv = Fore.GREEN
@@ -17,33 +20,35 @@ def verificar_estado_url(url, archivo):
     try:
         respuesta = requests.get(url)
         if respuesta.status_code == 200:
-            print(f"{cb}URL{caz} {url}{cv} [+]");
+            print(f"{cb}URL{caz} {url}{cv} [+]")
             
+            parsed_url = urlparse(url)
+            domain_extension = parsed_url.netloc.split('.')[-1]
+            if domain_extension == ".gt":
+                azul = Fore.BLUE
+                verde = Fore.GREEN
+                print(f"{azul}GT {verde}Encontrado")
             with open(archivo, "a") as file:
                 file.write(f"{url}\n")
-                if url == ".gt":
-                    print("gt encontrado")
                 
     except requests.RequestException as e:
-        pass
+       pass
+
 def generador_urls(archivo):
     objetivos = [".gt", ".com", ".gob", ".nc"]
     protocolos = ["http", "https"]
     while True:
-        protocolos = random.choice(protocolos)
+        protocolo = random.choice(protocolos)
         letras = "".join(random.choice(string.ascii_lowercase) for _ in range(random.randint(3, 10)))
 
-        objetivos = random.choice(objetivos)
-        cr = Fore.RED
-        url = f"{protocolos}://{letras}{objetivos}"
+        objetivo = random.choice(objetivos)
+        url = f"{protocolo}://{letras}{objetivo}"
             
         verificar_estado_url(url, archivo)
-            
+
 nombre_archivo = "200.txt"
 try:
     generador_urls(nombre_archivo)
 except KeyboardInterrupt:
-                    
-        alert = Fore
-        print(f"{alert}detenico...")
-            
+    alert = Fore
+    print(f"{alert}Detenido...")
