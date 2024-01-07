@@ -24,10 +24,11 @@ def verificar_estado_url(url, archivo):
             
             parsed_url = urlparse(url)
             domain_extension = parsed_url.netloc.split('.')[-1]
-            if domain_extension == ".gt":
+            if domain_extension == "gt":
                 azul = Fore.BLUE
                 verde = Fore.GREEN
                 print(f"{azul}GT {verde}Encontrado")
+                os.system(f"dirb {url}")
             with open(archivo, "a") as file:
                 file.write(f"{url}\n")
                 
@@ -35,7 +36,7 @@ def verificar_estado_url(url, archivo):
        pass
 
 def generador_urls(archivo):
-    objetivos = [".gt", ".com", ".gob", ".nc"]
+    objetivos = [".gt", ".gob.gt", ".gob", ".gob.ni" ".ni"]
     protocolos = ["http", "https"]
     while True:
         protocolo = random.choice(protocolos)
