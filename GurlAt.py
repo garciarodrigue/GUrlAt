@@ -29,7 +29,12 @@ def verificar_estado_url(url, archivo):
                 azul = Fore.BLUE
                 verde = Fore.GREEN
                 print(f"{azul}GT {verde}Encontrado")
-                os.system(f"dirb {url} -o {url}.txt")
+                def ejecutar_dirb_y_guardar_resultados(url, archivo_salida):
+                    comando = f"dirb {url} > {archivo_salida}"
+                    os.system(comando)
+                archivo_resultado = "resultado.txt"
+
+                ejecutar_dirb_y_guardar_resultados(url, archivo_resultado)
                 
                 def filtrar_directorios_status_200(archivo):
                     with open(archivo, 'r') as file:
